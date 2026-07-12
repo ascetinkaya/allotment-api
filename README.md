@@ -34,28 +34,34 @@ This project does not aim any commercial profit, but personal development in API
 
 ### v1.1
 - API key authentication for protected endpoints
-- User identity — bookings tied to the user who created them
-- Users can only list their own bookings
+- Partner identity — bookings tied to the partner who created them
+- Partners can only list their own bookings
 - Admin role with full access
 - Admin endpoints to manage hotels and room inventory without database reset (PATCH /hotels/{id}, PATCH /rooms/{room_id})
+- Alembic integration for database migrations
+- Migrate to PostgreSQL for persistent storage
 
 ### v1.2
+- Stop-sell and is_active flags for hotels and room types (availability restriction)
+- Admin can restrict availability per hotel and room type without removing content
 - Pagination on list endpoints
-- Multi-property availability search by city (no hotel_id required) - consider POST-based search endpoint for complex filter support
-- Rate plans and cancellation policies
+- Multi-property availability search by city (no hotel_id required) — consider POST-based search endpoint for complex filter support
+- Rate plans and cancellation policies (free cancellation, partially refundable, non-refundable)
 - Multi-room booking (book multiple rooms in one request)
+- Hotel details included in availability search response
 
 ### v1.3
+- Partner-hotel visibility mapping — admin assigns which hotels each partner can see
+- Partners only see their assigned hotels in GET /hotels and availability search
 - Per person pricing (price varies by occupancy)
 - RateID implementation — rate integrity between search and booking steps
-- Migrate to PostgreSQL for persistent storage (currently SQLite resets on redeployment)
 
 ### v1.4
 - Date-based rate calendar (different prices per date range)
 
 ### v2.0
 - Migrate to push-based supplier model
-- Hotels and room data managed by an external supplier(a new dedicated API)
+- Hotels and room data managed by an external dedicated supplier API
 - Supplier API pushes inventory and rate updates via dedicated endpoints
 - AllotmentAPI becomes a pure distribution layer
 
