@@ -1,5 +1,5 @@
 from database import SessionLocal, engine, Base
-from models import Hotel, RoomType
+from models import Hotel, RoomType, Partner
 
 Base.metadata.create_all(bind=engine)
 
@@ -36,5 +36,13 @@ if db.query(Hotel).count() == 0:
     print("Seed data added successfully!")
 else:
     print("Database already seeded, skipping.")
+if db.query(Partner).count() == 0:
+    partners = [
+        Partner(name="Partner A", api_key="test-key-partner-a", is_active=True),
+        Partner(name="Partner B", api_key="test-key-partner-b", is_active=True),
+    ]
+    db.add_all(partners)
+    db.commit()
+    print("Partners seeded successfully!")
 
 db.close()

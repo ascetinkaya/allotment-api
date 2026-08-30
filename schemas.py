@@ -63,6 +63,27 @@ class BookingResponse(BaseModel):
     check_out: date
     pax: int
     is_cancelled: bool
+    partner_id: Optional[int] = None
     room_type: RoomTypeResponse
+    class Config:
+        from_attributes = True
+
+class HotelUpdate(BaseModel):
+    name: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
+    address: Optional[str] = None
+
+class RoomTypeUpdate(BaseModel):
+    name: Optional[str] = None
+    max_occupancy: Optional[int] = None
+    price_per_night: Optional[float] = None
+    total_inventory: Optional[int] = None
+
+class PartnerResponse(BaseModel):
+    id: int
+    name: str
+    api_key: str
+    is_active: bool
     class Config:
         from_attributes = True

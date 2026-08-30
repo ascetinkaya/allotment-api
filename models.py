@@ -33,3 +33,13 @@ class Booking(Base):
     pax = Column(Integer)
     is_cancelled = Column(Boolean, default=False)
     room_type = relationship("RoomType", back_populates="bookings")
+    partner_id = Column(Integer, ForeignKey("partners.id"), nullable=True)
+    partner = relationship("Partner", back_populates="bookings")
+
+class Partner(Base):
+    __tablename__="partners"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    api_key = Column(String, unique=True, nullable=False)
+    is_active = Column(Boolean, default=True)
+    bookings = relationship("Booking", back_populates="partner")

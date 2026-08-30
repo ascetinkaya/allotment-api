@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "c1eee98a-fe99-4526-bfc4-13b7e3bad6b5",
     "name": "AllotmentAPI",
-    "description": "The AllotmentAPI is a JSON-based RESTful API, allowing searching for availability of test hotels, creating and managing bookings.\n\n## Folders\n\n- **Hotels** – Retrieve hotel listings and individual hotel details.\n    \n- **Availability** – Search for available rooms across hotels and dates.\n    \n- **Bookings** – Create, retrieve, list, and cancel bookings.\n    \n\n## Variables\n\n| Variable | Description |\n| --- | --- |\n| `base_url` | The root URL of the AllotmentAPI server. ([https://allotment-api-production.up.railway.app](https://allotment-api-production.up.railway.app)) |\n| `booking_ref` | A booking reference code, automatically set after a successful Create Booking call. It can be set manually to manage bookings. |\n\n## Workflow\n\n1. Use **List Hotels** to list hotels in the database. Use **Get Hotel by ID** to get information about a specific hotel by entering hotel ID.\n    \n2. Use **Search Hotel Availability** to check hotel availability for the selected dates.\n    \n3. Use **Create Booking** to reserve a room — the `booking_ref` variable is automatically captured.\n    \n4. Use **Get Booking** to retrieve booking details, or **Cancel Booking** to cancel it.",
+    "description": "The AllotmentAPI is a JSON-based RESTful API, allowing searching for availability of test hotels, creating and managing bookings, creating and managing hotels, rooms and partners in the database.\n\n## Folders\n\n- **Hotels** – Retrieve hotel listings and individual hotel details.\n    \n- **Availability** – Search for available rooms across hotels and dates.\n    \n- **Bookings** – Create, retrieve, list, and cancel bookings.\n    \n- **Admin** – Create and manage hotels and rooms. Create, manage and list partners.\n    \n\n## Variables\n\n| Variable | Description |\n| --- | --- |\n| `base_url` | The root URL of the AllotmentAPI server. ([https://allotment-api-production.up.railway.app](https://allotment-api-production.up.railway.app)) |\n| `booking_ref` | A booking reference code, automatically set after a successful Create Booking call. It can be set manually to manage bookings. |\n| `auth_secret_0xeu` | Admin key to perform on Admin endpoints. |\n| `auth_secret_0xeu` | Partner A key to perform on Bookings' endpoints. |\n| `hotel_id` | Automatically set after a successful Create Hotel call |\n| `room_id` | Automatically set after a successful Create Room call |\n| `partner_id` | Automatically set after a successful Create Partner call |\n\n## Reservation Workflow\n\n1. Use **List Hotels** to list hotels in the database. Use **Get Hotel by ID** to get information about a specific hotel by entering hotel ID.\n    \n2. Use **Search Hotel Availability** to check hotel availability for the selected dates.\n    \n3. Use **Create Booking** to reserve a room — the `booking_ref` variable is automatically captured.\n    \n4. Use **Get Booking** to retrieve booking details, or **Cancel Booking** to cancel it.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52203054"
   },
@@ -59,7 +59,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/availability?hotel_id=1&check_in=2026-08-09&check_out=2026-08-12&pax=2",
+              "raw": "{{base_url}}/availability?hotel_id=1&check_in=2026-11-15&check_out=2026-11-25&pax=2",
               "host": [
                 "{{base_url}}"
               ],
@@ -73,11 +73,11 @@
                 },
                 {
                   "key": "check_in",
-                  "value": "2026-08-09"
+                  "value": "2026-11-15"
                 },
                 {
                   "key": "check_out",
-                  "value": "2026-08-12"
+                  "value": "2026-11-25"
                 },
                 {
                   "key": "pax",
@@ -101,13 +101,10 @@
             {
               "listen": "test",
               "script": {
-                "exec": [
-                  "var response = pm.response.json();\r",
-                  "pm.collectionVariables.set(\"booking_ref\", response.booking_ref);"
-                ],
                 "type": "text/javascript",
-                "packages": {},
-                "requests": {}
+                "exec": [
+                  "var response = pm.response.json();\r\npm.collectionVariables.set(\"booking_ref\", response.booking_ref);"
+                ]
               }
             }
           ],
@@ -116,7 +113,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"room_type_id\": 4,\r\n  \"guest_name\": \"Test Guest\",\r\n  \"check_in\": \"2026-09-01\",\r\n  \"check_out\": \"2026-09-05\",\r\n  \"pax\": 2\r\n}",
+              "raw": "{\r\n  \"room_type_id\": 8,\r\n  \"guest_name\": \"Test Guest\",\r\n  \"check_in\": \"2026-10-01\",\r\n  \"check_out\": \"2026-10-05\",\r\n  \"pax\": 2\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -193,7 +190,317 @@
           "response": []
         }
       ],
-      "description": "Endpoints for managing the full booking lifecycle. Use these endpoints to create new bookings, list all existing bookings, retrieve a specific booking by reference, or cancel a booking."
+      "description": "Endpoints for managing the full booking lifecycle. Use these endpoints to create new bookings, list all existing bookings, retrieve a specific booking by reference, or cancel a booking.",
+      "auth": {
+        "type": "apikey",
+        "apikey": [
+          {
+            "key": "value",
+            "value": "{{auth_secret_10nx}}",
+            "type": "string"
+          },
+          {
+            "key": "in",
+            "value": "header",
+            "type": "string"
+          },
+          {
+            "key": "key",
+            "value": "X-API-Key",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Create Hotel",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var response = pm.response.json();\r\npm.collectionVariables.set(\"hotel_id\", response.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"test29august-dbd\",\r\n  \"city\": \"string\",\r\n  \"country\": \"string\",\r\n  \"address\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/hotels",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "hotels"
+              ]
+            },
+            "description": "Creates a new hotel by sending a `POST` request to `{{base_url}}/admin/hotels`. The request body must include the following fields: `name`, `city`, `country`, and `address` (all strings)."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Hotel",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"testnew-29august-2\",\r\n  \"city\": \"string\",\r\n  \"country\": \"string\",\r\n  \"address\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/hotels/{{hotel_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "hotels",
+                "{{hotel_id}}"
+              ]
+            },
+            "description": "Perform changes on an hotel existing in the database by sending a `PATCH` request `{{base_url}}/admin/hotels/{{hotel_id}}`. The request body must include at least one of the fields of `name`, `city`, `country`, and `address` (all strings)."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Room Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var response = pm.response.json();\r\npm.collectionVariables.set(\"room_id\", response.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Deluxe Room with Test view-29august-dbd\",\r\n  \"max_occupancy\": 2,\r\n  \"price_per_night\": 100,\r\n  \"total_inventory\": 6,\r\n  \"hotel_id\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/rooms",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "rooms"
+              ]
+            },
+            "description": "Creates a new room by sending a `POST` request to `{{base_url}}/admin/rooms`. The request body must include the following fields: `name`(string), `max_occupancy`, `price_per_night`, `total_inventory` and `hotel_id`(all ints)."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Room Type",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Deluxe Room with Test View-29august-dbd2\",\r\n  \"max_occupancy\": 4,\r\n  \"price_per_night\": 276,\r\n  \"total_inventory\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/rooms/{{room_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "rooms",
+                "{{room_id}}"
+              ]
+            },
+            "description": "Perform changes on an existing room in the database by sending a `PATCH` request to `{{base_url}}/admin/rooms/{{room_id}}`. The request body must include at least one of the fields of `name`(string), `max_occupancy`, `price_per_night`, `total_inventory` and `hotel_id`(all ints)."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Partner",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var response = pm.response.json();\r\npm.collectionVariables.set(\"partner_id\", response.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/admin/partners?name=KutuTravel5&api_key=jsAAAAgye867*abbccc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "partners"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "KutuTravel5"
+                },
+                {
+                  "key": "api_key",
+                  "value": "jsAAAAgye867*abbccc"
+                }
+              ]
+            },
+            "description": "Create a new partner by entering `name` and `api_key` in the query."
+          },
+          "response": []
+        },
+        {
+          "name": "List Partners",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/admin/partners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "partners"
+              ]
+            },
+            "description": "List partners by sending request to `{{base_url}}/admin/partners`."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Partner",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/admin/partners/{{partner_id}}?is_active=false",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "partners",
+                "{{partner_id}}"
+              ],
+              "query": [
+                {
+                  "key": "is_active",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "Set partner status by passing `true` (activate) or `false` (deactivate) in the `is_active` query parameter."
+          },
+          "response": []
+        }
+      ],
+      "description": "Admin endpoints to manage registered hotels, rooms, and partners in the database.\n\nThe admin key needed to be authorized for performing actions.",
+      "auth": {
+        "type": "apikey",
+        "apikey": [
+          {
+            "key": "key",
+            "value": "X-API-Key",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "value": "{{auth_secret_0xeu}}",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Health Check",
@@ -214,9 +521,53 @@
       "response": []
     }
   ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
   "variable": [
     {
       "key": "booking_ref",
+      "value": ""
+    },
+    {
+      "key": "auth_secret_10nx",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0xeu",
+      "secret": true
+    },
+    {
+      "key": "hotel_id",
+      "value": ""
+    },
+    {
+      "key": "room_id",
+      "value": ""
+    },
+    {
+      "key": "partner_id",
       "value": ""
     }
   ]

@@ -6,6 +6,7 @@ from models import Booking, RoomType
 from schemas import BookingCreate, BookingResponse
 from typing import List
 from datetime import date
+from auth import get_partner, get_admin
 import uuid
 
 router = APIRouter()
@@ -24,7 +25,7 @@ def get_booked_count(db: Session, room_type_id: int, check_in, check_out) -> int
     ).count()
 
 @router.post("", response_model=BookingResponse, summary="Create Booking")
-def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):
+def create_booking(booking: BookingCreate, db: Session = Depends(get_db), partner = Depends(get_partner)):
     if booking.check_in < date.today():
         raise HTTPException(status_code=400, detail="Check_in cannot be in the past.")
 
@@ -49,7 +50,8 @@ def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):
         guest_name=booking.guest_name,
         check_in=booking.check_in,
         check_out=booking.check_out,
-        pax=booking.pax
+        pax=booking.pax,
+        partner_id=partner["id"] if not partner["is_admin"] else None
     )
     db.add(db_booking)
     db.commit()
@@ -57,21 +59,27 @@ def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):
     return db_booking
 
 @router.get("", response_model=List[BookingResponse], summary="List Bookings")
-def list_bookings(db: Session = Depends(get_db)):
-    return db.query(Booking).all()
+def list_bookings(db: Session = Depends(get_db), partner = Depends(get_partner)):
+    if partner["is_admin"]:
+        return db.query(Booking).all()
+    return db.query(Booking).filter(Booking.partner_id == partner["id"]).all()
 
 @router.get("/{booking_ref}", response_model=BookingResponse, summary="Get Booking")
-def get_booking(booking_ref: str, db: Session = Depends(get_db)):
+def get_booking(booking_ref: str, db: Session = Depends(get_db), partner = Depends(get_partner)):
     booking = db.query(Booking).filter(Booking.booking_ref == booking_ref).first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found.")
+    if not partner["is_admin"] and booking.partner_id != partner["id"]:
+        raise HTTPException(status_code=403, detail="You are not authorized to view this booking.")
     return booking
 
 @router.delete("/{booking_ref}", response_model=BookingResponse, summary="Cancel Booking")
-def cancel_booking(booking_ref: str, db: Session = Depends(get_db)):
+def cancel_booking(booking_ref: str, db: Session = Depends(get_db), partner = Depends(get_partner)):
     booking = db.query(Booking).filter(Booking.booking_ref == booking_ref).first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found.")
+    if not partner["is_admin"] and booking.partner_id != partner["id"]:
+        raise HTTPException(status_code=403, detail="You are not authorized to cancel this booking.")
     if booking.is_cancelled:
         raise HTTPException(status_code=400, detail="Booking is already cancelled.")
 

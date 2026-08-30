@@ -9,13 +9,17 @@ This project does not aim any commercial profit, but personal development in API
 - Real-time allotment tracking — inventory decreases on booking, releases on cancellation.
 - Overbooking protection — returns 409 when no availability exists.
 - Full booking lifecycle — create, retrieve and cancel reservations.
+- Create and new hotels, rooms and partners via Admin endpoints.
+- Amend hotels, rooms and partners via Admin endpoints.
+- Bookings tied to separate partners, all visible by Admin key.
 
 ## Tech Stack
 
 - Python / FastAPI
 - SQLAlchemy ORM
-- SQLite
+- SQLite (local) / PostgreSQL (production)
 - Pydantic
+- Alembic (database migrations)
 
 ## Endpoints
 
@@ -24,22 +28,37 @@ This project does not aim any commercial profit, but personal development in API
 | GET | /hotels | List hotels | Public |
 | GET | /hotels/{id} | Hotel detail | Public |
 | GET | /availability | Search Hotel Availability | Public |
-| POST | /bookings | Create booking | Public |
-| GET | /bookings | List all bookings | Public(Authentication is planned.) |
-| GET | /bookings/{booking_ref} | Get booking | Public |
-| DELETE | /bookings/{booking_ref} | Cancel booking | Public |
+| POST | /bookings | Create booking | Partner |
+| GET | /bookings | List all bookings | Partner |
+| GET | /bookings/{booking_ref} | Get booking | Partner |
+| DELETE | /bookings/{booking_ref} | Cancel booking | Partner |
+| POST | /admin/hotels | Create hotel | Admin |
+| PATCH | /admin/hotels/{hotel_id} | Update hotel | Admin |
+| POST | /admin/rooms | Create room | Admin |
+| PATCH | /admin/rooms/{room_id} | Update room | Admin |
+| GET | /admin/partners | List partners | Admin |
+| POST | /admin/partners | Create Partner | Admin |
+| PATCH | /admin/partners/{partner_id} | Update partner | Admin |
 | GET | /health | Health check | Public |
+
+> **Partner** — requires a valid partner API key in the `X-API-Key` header.  
+> **Admin** — requires the admin API key in the `X-API-Key` header.
+
+## Keys
+Default local admin key: `allotment-key-admin`
+Partner A: `test-key-partner-a`
+Partner B: `test-key-partner-b`
 
 ## Roadmap
 
-### v1.1
+### v1.1 - Completed ✅
 - API key authentication for protected endpoints
 - Partner identity — bookings tied to the partner who created them
 - Partners can only list their own bookings
 - Admin role with full access
 - Admin endpoints to manage hotels and room inventory without database reset (PATCH /hotels/{id}, PATCH /rooms/{room_id})
 - Alembic integration for database migrations
-- Migrate to PostgreSQL for persistent storage
+- Migrate to PostgreSQL for persistent storage (in progress — deploying with this version)
 
 ### v1.2
 - Stop-sell and is_active flags for hotels and room types (availability restriction)
@@ -68,6 +87,17 @@ This project does not aim any commercial profit, but personal development in API
 ## Live API
 
 Base URL: `https://allotment-api-production.up.railway.app`
+
+## Running Locally
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+alembic upgrade head
+python seed_data.py
+uvicorn main:app --reload
+```
 
 ## Documentation
 
