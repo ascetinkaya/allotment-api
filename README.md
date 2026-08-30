@@ -9,7 +9,7 @@ This project does not aim any commercial profit, but personal development in API
 - Real-time allotment tracking — inventory decreases on booking, releases on cancellation.
 - Overbooking protection — returns 409 when no availability exists.
 - Full booking lifecycle — create, retrieve and cancel reservations.
-- Create and new hotels, rooms and partners via Admin endpoints.
+- Create new hotels, rooms and partners via Admin endpoints.
 - Amend hotels, rooms and partners via Admin endpoints.
 - Bookings tied to separate partners, all visible by Admin key.
 
