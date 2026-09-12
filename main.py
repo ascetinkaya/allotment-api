@@ -16,8 +16,8 @@ Use these keys in the `X-API-Key` header to test protected endpoints:
 
 - **Partner A:** `test-key-partner-a`
 - **Partner B:** `test-key-partner-b`
+- **Admin** `allotment-key-admin`
 
-Admin key is not publicly available.
 """,
     version="1.1"
 )
