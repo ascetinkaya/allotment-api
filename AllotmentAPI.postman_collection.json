@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "c1eee98a-fe99-4526-bfc4-13b7e3bad6b5",
     "name": "AllotmentAPI",
-    "description": "The AllotmentAPI is a JSON-based RESTful API, allowing searching for availability of test hotels, creating and managing bookings, creating and managing hotels, rooms and partners in the database.\n\n## Folders\n\n- **Hotels** – Retrieve hotel listings and individual hotel details.\n    \n- **Availability** – Search for available rooms across hotels and dates.\n    \n- **Bookings** – Create, retrieve, list, and cancel bookings.\n    \n- **Admin** – Create and manage hotels and rooms. Create, manage and list partners.\n    \n\n## Variables\n\n| Variable | Description |\n| --- | --- |\n| `base_url` | The root URL of the AllotmentAPI server. ([https://allotment-api-production.up.railway.app](https://allotment-api-production.up.railway.app)) |\n| `booking_ref` | A booking reference code, automatically set after a successful Create Booking call. It can be set manually to manage bookings. |\n| `auth_secret_0xeu` | Admin key to perform on Admin endpoints. |\n| `auth_secret_0xeu` | Partner A key to perform on Bookings' endpoints. |\n| `hotel_id` | Automatically set after a successful Create Hotel call |\n| `room_id` | Automatically set after a successful Create Room call |\n| `partner_id` | Automatically set after a successful Create Partner call |\n\n## Reservation Workflow\n\n1. Use **List Hotels** to list hotels in the database. Use **Get Hotel by ID** to get information about a specific hotel by entering hotel ID.\n    \n2. Use **Search Hotel Availability** to check hotel availability for the selected dates.\n    \n3. Use **Create Booking** to reserve a room — the `booking_ref` variable is automatically captured.\n    \n4. Use **Get Booking** to retrieve booking details, or **Cancel Booking** to cancel it.",
+    "description": "The AllotmentAPI is a JSON-based RESTful API, allowing searching for availability of test hotels, creating and managing bookings, creating and managing hotels, rooms and partners in the database.\n\n## Folders\n\n- **Hotels** – Retrieve hotel listings and individual hotel details.\n    \n- **Availability** – Search for available rooms across hotels and dates.\n    \n- **Bookings** – Create, retrieve, list, and cancel bookings.\n    \n- **Admin** – Create and manage hotels and rooms. Create, manage and list partners.\n    \n\n## Variables\n\n| Variable | Description |\n| --- | --- |\n| `base_url` | The root URL of the AllotmentAPI server. If you run it locally, provide the server url. |\n| `booking_ref` | A booking reference code, automatically set after a successful Create Booking call. It can be set manually to manage bookings. |\n| `auth_secret_0xeu` | Admin key to perform on Admin endpoints. |\n| `auth_secret_10nx` | Partner A key to perform on Bookings' endpoints. |\n| `hotel_id` | Automatically set after a successful Create Hotel call |\n| `room_id` | Automatically set after a successful Create Room call |\n| `partner_id` | Automatically set after a successful Create Partner call |\n\n## Reservation Workflow\n\n1. Use **List Hotels** to list hotels in the database. Use **Get Hotel by ID** to get information about a specific hotel by entering hotel ID.\n    \n2. Use **Search Hotel Availability** to check hotel availability for the selected dates.\n    \n3. Use **Create Booking** to reserve a room — the `booking_ref` variable is automatically captured.\n    \n4. Use **Get Booking** to retrieve booking details, or **Cancel Booking** to cancel it.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52203054"
   },
@@ -113,7 +113,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"room_type_id\": 8,\r\n  \"guest_name\": \"Test Guest\",\r\n  \"check_in\": \"2026-10-01\",\r\n  \"check_out\": \"2026-10-05\",\r\n  \"pax\": 2\r\n}",
+              "raw": "{\r\n  \"room_type_id\": 8,\r\n  \"guest_name\": \"Test Guest\",\r\n  \"check_in\": \"2026-09-10\",\r\n  \"check_out\": \"2026-09-15\",\r\n  \"pax\": 2\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -257,7 +257,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"test29august-dbd\",\r\n  \"city\": \"string\",\r\n  \"country\": \"string\",\r\n  \"address\": \"string\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Test Hotel on Live Server-30August\",\r\n  \"city\": \"Istanbul\",\r\n  \"country\": \"Turkey\",\r\n  \"address\": \"Merkez,00000\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -285,7 +285,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"testnew-29august-2\",\r\n  \"city\": \"string\",\r\n  \"country\": \"string\",\r\n  \"address\": \"string\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Updated-30 August\",\r\n  \"city\": \"Istanbul\",\r\n  \"country\": \"Turkey\",\r\n  \"address\": \"Merkez,00000\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -325,7 +325,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Deluxe Room with Test view-29august-dbd\",\r\n  \"max_occupancy\": 2,\r\n  \"price_per_night\": 100,\r\n  \"total_inventory\": 6,\r\n  \"hotel_id\": 4\r\n}",
+              "raw": "{\r\n  \"name\": \"Deluxe Room with Test view-30august\",\r\n  \"max_occupancy\": 2,\r\n  \"price_per_night\": 100,\r\n  \"total_inventory\": 6,\r\n  \"hotel_id\": 6\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -353,7 +353,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Deluxe Room with Test View-29august-dbd2\",\r\n  \"max_occupancy\": 4,\r\n  \"price_per_night\": 276,\r\n  \"total_inventory\": 4\r\n}",
+              "raw": "{\r\n  \"name\": \"Deluxe Room with Test View-30august\",\r\n  \"max_occupancy\": 4,\r\n  \"price_per_night\": 276,\r\n  \"total_inventory\": 4\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/admin/partners?name=KutuTravel5&api_key=jsAAAAgye867*abbccc",
+              "raw": "{{base_url}}/admin/partners?name=KutuTravel5&api_key=aaccbb1",
               "host": [
                 "{{base_url}}"
               ],
@@ -407,7 +407,7 @@
                 },
                 {
                   "key": "api_key",
-                  "value": "jsAAAAgye867*abbccc"
+                  "value": "aaccbb1"
                 }
               ]
             },
@@ -549,14 +549,6 @@
     {
       "key": "booking_ref",
       "value": ""
-    },
-    {
-      "key": "auth_secret_10nx",
-      "secret": true
-    },
-    {
-      "key": "auth_secret_0xeu",
-      "secret": true
     },
     {
       "key": "hotel_id",
