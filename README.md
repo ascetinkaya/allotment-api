@@ -17,7 +17,7 @@ This project does not aim any commercial profit, but personal development in API
 
 - Python / FastAPI
 - SQLAlchemy ORM
-- SQLite (local) / PostgreSQL (production)
+- SQLite (local)
 - Pydantic
 - Alembic (database migrations)
 
@@ -58,7 +58,7 @@ Partner B: `test-key-partner-b`
 - Admin role with full access
 - Admin endpoints to manage hotels and room inventory without database reset (PATCH /hotels/{id}, PATCH /rooms/{room_id})
 - Alembic integration for database migrations
-- Migrate to PostgreSQL for persistent storage (in progress — deploying with this version)
+- Migrate to PostgreSQL for persistent storage (Migrated to PostgreSQL on live server. The server is currently suspended.)
 
 ### v1.2
 - Stop-sell and is_active flags for hotels and room types (availability restriction)
@@ -86,7 +86,7 @@ Partner B: `test-key-partner-b`
 
 ## Live API
 
-Base URL: `https://allotment-api-production.up.railway.app`
+Live environment is suspended. The project can be run locally.
 
 ## Running Locally
 
@@ -101,5 +101,4 @@ uvicorn main:app --reload
 
 ## Documentation
 
-- Interactive docs (Swagger UI): `https://allotment-api-production.up.railway.app/docs`
 - Postman documentation: `https://documenter.getpostman.com/view/52203054/2sBXwmQsxZ`
